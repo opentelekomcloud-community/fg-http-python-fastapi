@@ -1,0 +1,4 @@
+fastapi[standard]
+uvicorn >= 0.34.3
+requests
+asgi-correlation-id >= 4.3.4
