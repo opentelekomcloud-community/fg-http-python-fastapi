@@ -7,10 +7,12 @@ Deploy using Terraform
 Prerequisites
 -------------
 
-Install terraform
-^^^^^^^^^^^^^^^^^^^^^^^^
+Terraform
+^^^^^^^^^
 
-To install Terraform cli, see `Install Terraform <(https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli>`_
+To install Terraform cli, see `Install Terraform <https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli>`_
+
+For provider documentation, see `Open Telekom Cloud Provider <https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs>`_
 
 Adapt environment variables used in provider.tf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -19,7 +21,7 @@ Adapt environment variables used in provider.tf
     :widths: 20 20 25
     :header-rows: 1
 
-    * - Name
+    * - Environment variable name
       - Value
       - Remark
 
@@ -33,11 +35,12 @@ Adapt environment variables used in provider.tf
 
     * - TF_VAR_OTC_SDK_DOMAIN_NAME
       - <your_domain_name>
-      - Domain Name, eg. OTC-EU-DE-000000000010000XXXXX
+      - Domain Name, eg. OTC-EU-DE-000000000010000XXXXX,
+        see :api_usage:`Obtaining Required Information <guidelines/calling_apis/obtaining_required_information.html>`.
 
     * - TF_VAR_OTC_SDK_PROJECTID
       - <your_project_id>
-      - Project Id
+      - Project Id, see :api_usage:`Obtaining Required Information <guidelines/calling_apis/obtaining_required_information.html>`.
 
     * - TF_VAR_OTC_SDK_PROJECTNAME
       - <your_project_name>
@@ -45,8 +48,8 @@ Adapt environment variables used in provider.tf
 
     * - TF_VAR_OTC_SDK_REGION
       - <your_region_name>
-      - Region Name, eg. "eu-de", for available regions, see:
-        `Regions <https://docs.otc.t-systems.com/regions-and-endpoints/index.html#region>`_. 
+      - Region Name, eg. "eu-de", for available regions,
+        see: `Regions <https://docs.otc.t-systems.com/regions-and-endpoints/index.html#region>`_.
 
     * - AWS_ACCESS_KEY_ID
       - <your_access_key>
@@ -62,46 +65,64 @@ Create OBS Bucket for .tfstate files
 
 Terraform must store state about your managed infrastructure and configuration.
 
-This state is used by Terraform to map real world resources to your configuration,
-keep track of metadata, and to improve performance for large infrastructures.
+This state is used by Terraform to map real world resources to your
+configuration, keep track of metadata, and to improve performance
+for large infrastructures.
 
 See: `Terraform state <https://developer.hashicorp.com/terraform/language/state>`_
 
 Create OBS bucket for terraform state file either:
 
-* using OpenTelekomCloud OBS console with bucket name as defined in ``provider.tf`` file for ``bucket``.
+* using OpenTelekomCloud OBS console with bucket name as 
+  defined in :github_repo_master:`provider.tf <terraform/provider.tf>`
+  file for ``terraform.backend.s3.bucket``.
 
-* using the OpenTelekomCloud CLI with command [s3cmd](https://github.com/opentelekomcloud/obs-s3/blob/master/s3cmd/README.md)
+* using the OpenTelekomCloud CLI with command `s3cmd <https://github.com/opentelekomcloud/obs-s3/blob/master/s3cmd/README.md>`_
+  (replace <bucket_name>):
 
   .. code-block:: bash
-  
+
       s3cmd \
         --access_key=${AWS_ACCESS_KEY_ID} \
         --secret_key=${AWS_SECRET_ACCESS_KEY} \
         --no-ssl \
         mb s3://<bucket_name>
 
+  .. note::
+
+      In provider.tf, the bucket name is ``sample-tf-backend``
+
 
 Adapt provider.tf file
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Check and adapt following values in [provider.tf](./terraform/provider.tf) (see comments there).
+Check and adapt following values in
+:github_repo_master:`provider.tf <terraform/provider.tf>`
+(see comments there).
 
-* backend.s3.endpoints
-* backend.s3.bucket
-* backend.s3.key
-* backend.s3.region
+* terraform.backend.s3.endpoints
+* terraform.backend.s3.bucket
+* terraform.backend.s3.key
+* terraform.backend.s3.region
+* provider.opentelekomcloud.auth_url
 
+Adapt variables.tf file
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Check and adapt values in
+:github_repo_master:`variables.tf <terraform/variables.tf>`.
 
 Adapt apigw.tf file
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Adapt apigw.tf according to your needs (e.g. IP addresses).
+Adapt :github_repo_master:`apigw.tf <terraform/apigw.tf>`
+according to your needs (e.g. IP addresses).
 
 Deploy
 ------
 
-In folder ``terraform``
+In folder :github_repo_master:`terraform <terraform>`
+run following commands:
 
 .. code-block:: bash
 
@@ -120,9 +141,12 @@ In folder ``terraform``
   # destroy all deployed resources on OpenTelekomCloud
   terraform destroy
 
+.. note::
+
+    Deployment of resources may take several minutes.
 
 Terraform apply script will output the URLs to test endpoints
-(APIGWGROUPID and REGION will be replaced with real values):
+(**APIGWGROUPID** and **REGION** will be replaced with real values):
 
 .. code-block:: bash
 

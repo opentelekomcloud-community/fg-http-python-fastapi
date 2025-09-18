@@ -6,6 +6,7 @@
 
 
 # set by environment variable TF_VAR_OTC_SDK_AK
+# see: https://docs.otc.t-systems.com/api-usage/guidelines/calling_apis/ak_sk_authentication/generating_an_ak_and_sk.html
 variable "OTC_SDK_AK" {
   description = "Personal access key"
   type        = string
@@ -13,6 +14,7 @@ variable "OTC_SDK_AK" {
 }
 
 # set by environment variable TF_VAR_OTC_SDK_SK
+# see: https://docs.otc.t-systems.com/api-usage/guidelines/calling_apis/ak_sk_authentication/generating_an_ak_and_sk.html
 variable "OTC_SDK_SK" {
   description = "Personal secret key"
   type        = string
@@ -20,24 +22,28 @@ variable "OTC_SDK_SK" {
 }
 
 # set by environment variable TF_VAR_OTC_SDK_DOMAIN_NAME
+# see: https://docs.otc.t-systems.com/api-usage/guidelines/calling_apis/obtaining_required_information.html
 variable "OTC_SDK_DOMAIN_NAME" {
   description = "Domain Name, eg. OTC-EU-DE-000000000010000XXXXX"
   type        = string
 }
 
 # set by environment variable TF_VAR_OTC_SDK_PROJECTID
+# see: https://docs.otc.t-systems.com/api-usage/guidelines/calling_apis/obtaining_required_information.html
 variable "OTC_SDK_PROJECTID" {
   description = "Project Id"
   type        = string
 }
 
 # set by environment variable TF_VAR_OTC_SDK_PROJECTNAME
+# see: https://docs.otc.t-systems.com/api-usage/guidelines/calling_apis/obtaining_required_information.html
 variable "OTC_SDK_PROJECTNAME" {
   description = "Project Name, eg. eu-de_MYPROJECT"
   type        = string
 }
 
 # set by environment variable OTC_SDK_REGION
+# see: https://docs.otc.t-systems.com/regions-and-endpoints/index.html
 variable "OTC_SDK_REGION" {
   description = "Region Name, eg. eu-de"
   type        = string
