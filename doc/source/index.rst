@@ -26,7 +26,7 @@ Architecture
 Source Code
 -----------
 
-For source code, see :github_repo_master:`fg-http-python-fastapi<>` on Github .
+For source code, see :github_repo_master:`fg-http-python-fastapi<>` on Github.
 
 
 Disclaimer
