@@ -172,7 +172,7 @@ html_theme_options = {
 }
 
 html_title = "fg-http-python-fastapi"
-html_baseurl = "https://opentelekomcloud-community.github.io/fg-http-python-fastapi/"
+# html_baseurl = "https://opentelekomcloud-community.github.io/fg-http-python-fastapi/"
 
 
 # Add any paths that contain custom static files (such as style sheets) here,
