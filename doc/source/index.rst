@@ -5,7 +5,7 @@ FunctionGraph example fg-http-python-fastapi
    :maxdepth: 3
 
 Sample on how to create FunctionGraph HTTP function using
-python and `FastAPI framework <https://fastapi.tiangolo.com>`_
+`Python <https://www.python.org/>`_ and `FastAPI framework <https://fastapi.tiangolo.com>`_
 
 .. toctree::
    :includehidden:
@@ -13,6 +13,15 @@ python and `FastAPI framework <https://fastapi.tiangolo.com>`_
 
    Setup <setup/index>
    Deploy <deploy/index>
+
+Architecture
+------------
+
+
+.. raw:: html
+
+    <object data="_static/architecture.drawio.svg" type="image/svg+xml"></object>
+
 
 Source Code
 -----------
