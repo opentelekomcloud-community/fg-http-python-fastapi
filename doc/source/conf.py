@@ -83,7 +83,7 @@ enforcer_warnings_as_errors = False
 # execute "export SPHINX_DEBUG=1" in your terminal to disable
 
 # The suffix of source filenames.
-source_suffix = '.rst'
+source_suffix = {'.rst': 'restructuredtext', '.md': 'markdown'}
 
 # The master toctree document.
 master_doc = 'index'
@@ -171,7 +171,9 @@ html_theme_options = {
     "disable_global_nav": "True"
 }
 
-html_title = "OTC Java SDK v1"
+html_title = "fg-http-python-fastapi"
+html_baseurl = "https://opentelekomcloud-community.github.io/fg-http-python-fastapi/"
+
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -246,5 +248,3 @@ extlinks_detect_hardcoded_links = True
 copybutton_selector = "div.copy-button pre"
 # do not copy line numbers and prompt character
 copybutton_exclude = '.linenos, .gp'
-
-html_baseurl= "/fg-http-python-fastapi/"
