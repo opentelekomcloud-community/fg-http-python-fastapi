@@ -247,6 +247,4 @@ copybutton_selector = "div.copy-button pre"
 # do not copy line numbers and prompt character
 copybutton_exclude = '.linenos, .gp'
 
-
-
-TEST_ROOT="/fg-http-python-fastapi/index.html"
+html_baseurl= "/fg-http-python-fastapi/"
