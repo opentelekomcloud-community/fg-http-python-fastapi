@@ -3,9 +3,9 @@
 Sample on how to create FunctionGraph HTTP function using python and [FastAPI framework](https://fastapi.tiangolo.com)
 
 > [!Note] 
-> ###############################################
->           Work in progress....
-> ###############################################
+> ###############################################  
+> $~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~$Work in progress....  
+> ###############################################  
 
 ## Architecture overview
 
