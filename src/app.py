@@ -1,26 +1,23 @@
-from contextlib import asynccontextmanager
-from fastapi import FastAPI
-from fastapi.responses import FileResponse
-
-from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html
-from fastapi.middleware.cors import CORSMiddleware
-
 import logging
 import logging.config
-from requests import Request
-from api.items import items_router
-from asgi_correlation_id import CorrelationIdMiddleware, correlation_id
-import time
-
-from fastapi import HTTPException
-from fastapi.exception_handlers import http_exception_handler
-from fastapi.responses import JSONResponse
-
 import os
+import time
 import traceback
+from contextlib import asynccontextmanager
+
+from asgi_correlation_id import CorrelationIdMiddleware, correlation_id
+from fastapi import FastAPI, HTTPException
+from fastapi.exception_handlers import http_exception_handler
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.openapi.docs import get_redoc_html, get_swagger_ui_html
+from fastapi.responses import FileResponse, JSONResponse
+from requests import Request
+
+from api.api_v1.api import router as api_router
 
 ROOT_LEVEL = "DEBUG"
 
+# Logging configuration
 LOGGING_CONFIG = {
     "version": 1,
     "disable_existing_loggers": True,
@@ -64,10 +61,9 @@ LOGGING_CONFIG = {
 
 logger = logging.getLogger(__name__)
 
-tags_metadata = [
-    {"name": "API", "description": "API samples"},
+openapi_tags_metadata = [
+    {"name": "Items", "description": "Items endpoint"},
 ]
-
 
 # see: https://fastapi.tiangolo.com/advanced/events/?h=async+conte#lifespan
 @asynccontextmanager
@@ -80,30 +76,30 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     lifespan=lifespan,
-    title="FunctionGraph and FastAPI",
+    title="OpenTelekomCloud FunctionGraph and FastAPI",
     summary="OpenTelekomCloud sample for FunctionGraph HTTP function using FastAPI",
     version="0.0.1",
     debug=True,
     docs_url=None,  # will be overwritten, see below: overridden_swagger()
     redoc_url=None,  # will be overwritten, see below: overridden_redoc()
-    openapi_tags=tags_metadata,
+    openapi_tags=openapi_tags_metadata,
 )
 
-
+# configure custom docs endpoints
 @app.get("/docs", include_in_schema=False)
 def overridden_swagger():
     return get_swagger_ui_html(
         openapi_url=app.openapi_url, title=app.title, swagger_favicon_url="/favicon.ico"
     )
 
-
+# configure custom redoc endpoints
 @app.get("/redoc", include_in_schema=False)
 def overridden_redoc():
     return get_redoc_html(
         openapi_url=app.openapi_url, title=app.title, redoc_favicon_url="/favicon.ico"
     )
 
-
+# configure exception handlers
 @app.exception_handler(Exception)
 async def unhandled_exception_handler(request: Request, exc: Exception) -> JSONResponse:
     logger.error(traceback.format_exc())
@@ -117,7 +113,7 @@ async def unhandled_exception_handler(request: Request, exc: Exception) -> JSONR
         ),
     )
 
-
+# add process time header to responses
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next):
     start_time = time.time()
@@ -130,6 +126,8 @@ async def add_process_time_header(request: Request, call_next):
 # add requestid to logging, see: https://github.com/snok/asgi-correlation-id
 app.add_middleware(CorrelationIdMiddleware, header_name="x-cff-request-id")
 
+# add CORS middleware
+# see: https://fastapi.tiangolo.com/tutorial/cors/?h=cors
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -149,13 +147,13 @@ app.add_middleware(
     ],
 )
 
-
+# handle root requests
 @app.get("/")
 def read_root():
     logging.info("Debug hello")
     return {"Hello": "World"}
 
-
+# handle favicon requests
 @app.get("/favicon.ico", include_in_schema=False)
 async def favicon():
     if os.environ.get("RUNTIME_CODE_ROOT") is None:
@@ -165,10 +163,12 @@ async def favicon():
 
     return FileResponse(file, media_type="image/x-icon", filename="favicon.ico")
 
+# include API router
+app.include_router(api_router, prefix="/api/v1")
 
-app.include_router(items_router, prefix="/api", tags=["API"])
-
+##########################################################################################
 if __name__ == "__main__":
     import uvicorn
-
+    
+    # On OpenTelekomCloud FunctionGraph port must be 8000
     uvicorn.run("app:app", port=8000, log_level="debug", reload=True, host="localhost")

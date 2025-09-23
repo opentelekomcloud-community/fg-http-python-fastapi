@@ -1,5 +1,5 @@
 ##########################################################
-# code bucket
+# create code bucket
 ##########################################################
 resource "opentelekomcloud_obs_bucket" "codebucket" {
   bucket = replace(format("%s-%s", var.prefix, "codebucket"), "_", "-")
@@ -7,37 +7,15 @@ resource "opentelekomcloud_obs_bucket" "codebucket" {
 }
 
 ##########################################################
-# create zip file
-##########################################################
-resource "null_resource" "createZip" {
-  provisioner "local-exec" {
-    command     = "python3 createZip.py"
-    working_dir = "${path.root}/.."
-  }
-  triggers = {
-    always_run = "${timestamp()}"
-  }
-
-}
-
-
-##########################################################
 # upload zip file to bucket
 ##########################################################
 resource "opentelekomcloud_obs_bucket_object" "code_object" {
+  depends_on = [ data.archive_file.function_zip ]
   bucket = opentelekomcloud_obs_bucket.codebucket.bucket
   key    = format("%s/%s", "code", var.zip_file_name)
-  source = format("${path.root}/../%s", var.zip_file_name)
-  etag   = filemd5(format("${path.root}/../%s", var.zip_file_name))
-}
+  source = format("${path.root}/../target/%s", var.zip_file_name)
+  etag   = data.archive_file.function_zip.output_base64sha256
 
-##########################################################
-# store md5 of zip file in state
-##########################################################
-resource "terraform_data" "replacement" {
-  input = [
-    filemd5(format("${path.root}/../%s", var.zip_file_name))
-  ]
 }
 
 ##########################################################
@@ -48,7 +26,7 @@ resource "opentelekomcloud_fgs_function_v2" "function" {
 
   name = format("%s_%s", var.prefix, var.function_name)
   app  = "default"
-  #  agency      = var.agency_name
+
   handler          = "index.handler"
   memory_size      = 128
   timeout          = 30
@@ -69,15 +47,17 @@ resource "opentelekomcloud_fgs_function_v2" "function" {
   lifecycle {
     # replace if code in bucket changed
     replace_triggered_by = [
-      terraform_data.replacement
+       #data.archive_file.function_zip.output_base64sha256
+       #random_id.trigger_replacer
+       opentelekomcloud_obs_bucket_object.code_object.etag
     ]
   }
 
-  reserved_instances {
-    count          = 1
-    qualifier_name = "latest"
-    qualifier_type = "version"
-  }
+  # reserved_instances {
+  #   count          = 1
+  #   qualifier_name = "latest"
+  #   qualifier_type = "version"
+  # }
 
 }
 
@@ -136,9 +116,12 @@ resource "opentelekomcloud_fgs_trigger_v2" "apig1" {
   type         = "DEDICATEDGATEWAY"
   status       = "ACTIVE"
 
-  lifecycle {
-    replace_triggered_by = [random_id.trigger_replacer]
-  }
+   lifecycle {
+     replace_triggered_by = [
+      random_id.trigger_replacer
+      #  data.archive_file.function_zip.output_base64sha256
+      ]
+   }
 
   event_data = jsonencode({
     "name"       = format("%s_%s", var.prefix, "api1") #trigger_1
@@ -181,5 +164,4 @@ resource "opentelekomcloud_lts_stream_v2" "FunctionLogStream" {
   group_id    = opentelekomcloud_lts_group_v2.FunctionLogGroup.id
   stream_name = format("%s_%s_%s", var.prefix, var.function_name, "log_stream")
 }
-
 

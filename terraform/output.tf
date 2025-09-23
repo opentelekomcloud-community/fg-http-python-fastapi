@@ -12,7 +12,7 @@ output "URL_Root" {
 }
 
 output "URL_APIItems" {
-  value = format("https://%s.apic.%s.otc.t-systems.com/api/items/100",
+  value = format("https://%s.apic.%s.otc.t-systems.com/api/v1/items/100?q=20",
   opentelekomcloud_apigw_group_v2.group1.id, var.OTC_SDK_REGION)
 }
 

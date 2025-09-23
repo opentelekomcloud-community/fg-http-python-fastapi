@@ -7,6 +7,12 @@ Deploy using Terraform
 Prerequisites
 -------------
 
+Unix environment
+^^^^^^^^^^^^^^^^^^
+
+Make sure you have a Unix-like environment (Linux or `WSL on Windows <https://learn.microsoft.com/en-us/windows/wsl>`_)
+to run the Terraform commands.
+
 Terraform
 ^^^^^^^^^
 
@@ -150,14 +156,9 @@ Terraform apply script will output the URLs to test endpoints
 
 .. code-block:: bash
 
-   URL_Root = "https://APIGWGROUPID.apic.REGION.otc.t-systems.com/"
-
-   URL_APIItems = "https://APIGWGROUPID.apic.REGION.otc.t-systems.com/api/items/100?q=100"
-
-   URL_docs = "https://APIGWGROUPID.apic.REGION.otc.t-systems.com/docs"
-
-   URL_redocs = "https://APIGWGROUPID.apic.REGION.otc.t-systems.com/redoc"
-
-   URL_openapi = "https://APIGWGROUPID.apic.REGION.otc.t-systems.com/openapi.json"
-
-
+    URL = "https://APIGWGROUPID.apic.REGION.otc.t-systems.com"
+    URL_APIItems = "https://APIGWGROUPID.apic.REGION.otc.t-systems.com/api/v1/items/100?q=20"
+    URL_Root = "https://APIGWGROUPID.apic.REGION.otc.t-systems.com/"
+    URL_docs = "https://APIGWGROUPID.apic.REGION.otc.t-systems.com/docs"
+    URL_openapi = "https://APIGWGROUPID.apic.REGION.otc.t-systems.com/openapi.json"
+    URL_redocs = "https://APIGWGROUPID.apic.REGION.otc.t-systems.com/redoc"

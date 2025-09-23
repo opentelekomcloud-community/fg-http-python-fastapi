@@ -22,7 +22,7 @@ resource "opentelekomcloud_fgs_event_v2" "event_root" {
 }
 
 ##########################################################
-# Test event for /api/items/100?q=20
+# Test event for /api/v1/items/100?q=20
 ##########################################################
 resource "opentelekomcloud_fgs_event_v2" "event_items" {
   function_urn = opentelekomcloud_fgs_function_v2.function.urn
@@ -34,7 +34,7 @@ resource "opentelekomcloud_fgs_event_v2" "event_items" {
     httpMethod            = "GET"
     pathParameters        = {}
     headers               = {}
-    path                  = "/api/items/100"
+    path                  = "/api/v1/items/100"
     isBase64Encoded       = true
   }))
 }

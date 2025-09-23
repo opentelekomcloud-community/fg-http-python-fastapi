@@ -1,1 +1,2 @@
-/opt/function/runtime/python3.10/rtsp/python/bin/python3 $RUNTIME_CODE_ROOT/app.py
+export PYTHONPATH=${PYTHONPATH}:${RUNTIME_CODE_ROOT}/dependencies
+/opt/function/runtime/python3.10/rtsp/python/bin/python3 $RUNTIME_CODE_ROOT/src/app.py

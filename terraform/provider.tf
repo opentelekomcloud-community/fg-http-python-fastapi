@@ -58,6 +58,12 @@ terraform {
       source  = "opentelekomcloud/opentelekomcloud"
       version = ">= 1.36.47"
     }
+
+    local = {
+      source  = "hashicorp/local"
+      version = "2.5.3"
+    }
+    
   }
   backend "s3" {    
     # See: https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/guides/backends

@@ -7,6 +7,11 @@ Setup and Deploy
 Prerequisites
 -------------
 
+Unix environment
+^^^^^^^^^^^^^^^^^^
+
+Make sure you have a Unix-like environment (Linux or `WSL on Windows <https://learn.microsoft.com/en-us/windows/wsl>`_).
+
 Python 3.10 installed
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -51,5 +56,5 @@ Further endpoints:
 
 * http://localhost:8000/redoc
 
-* http://localhost:8000/api/items/100?q=100
+* http://localhost:8000/api/v1/items/100?q=100
 

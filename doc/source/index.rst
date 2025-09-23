@@ -12,11 +12,10 @@ Sample on how to create FunctionGraph HTTP function using
    :maxdepth: 1
 
    Setup <setup/index>
-   Deploy <deploy/index>
+   Deploy using Terraform <deployTF/index>
 
 Architecture
 ------------
-
 
 .. raw:: html
 
