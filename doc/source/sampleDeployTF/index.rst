@@ -1,4 +1,4 @@
-Deploy using Terraform
+Deploy Sample using Terraform
 ======================
 
 .. toctree::

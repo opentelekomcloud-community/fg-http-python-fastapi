@@ -11,15 +11,9 @@ Sample on how to create FunctionGraph HTTP function using
    :includehidden:
    :maxdepth: 1
 
-   Setup <setup/index>
-   Deploy using Terraform <deployTF/index>
-
-Architecture
-------------
-
-.. raw:: html
-
-    <object data="_static/architecture.drawio.svg" type="image/svg+xml"></object>
+   Simple FastApi <simpleFastApi/index>
+   Setup Sample <sampleSetup/index>
+   Deploy Sample using Terraform <sampleDeployTF/index>
 
 
 Source Code
