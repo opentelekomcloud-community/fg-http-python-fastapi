@@ -64,6 +64,28 @@ Adapt environment variables used in provider.tf
     * - AWS_SECRET_ACCESS_KEY
       - <your_secret_key>
       - same as TF_VAR_OTC_SDK_SK
+    
+    * - AWS_REQUEST_CHECKSUM_CALCULATION
+      - "when_required"
+      - see note below
+
+    * - AWS_RESPONSE_CHECKSUM_VALIDATION
+      - "when_required"
+      - see note below
+
+.. note::
+
+  There is an issue (`see GitHub <https://github.com/hashicorp/terraform/issues/36704>`_ ,
+  `Problem - Remote State OBS - Terraform >=v1.6 <https://community.open-telekom-cloud.com/community?id=community_question&sys_id=1207be61138086d0d15a246ea6744162>`_) 
+  which causes the s3 backend to fail as it doesn't respect the `skip_s3_checksum`
+  setting properly due to a newer AWX Go SDK in the TF code.
+  
+  As a workaround set these environment variables:
+
+  .. code-block:: bash
+
+    export AWS_REQUEST_CHECKSUM_CALCULATION="when_required"
+    export AWS_RESPONSE_CHECKSUM_VALIDATION="when_required"
 
 
 Create OBS Bucket for .tfstate files
