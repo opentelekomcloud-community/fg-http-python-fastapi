@@ -1,5 +1,5 @@
 Deploy Sample using Terraform
-======================
+==============================
 
 .. toctree::
    :maxdepth: 3
