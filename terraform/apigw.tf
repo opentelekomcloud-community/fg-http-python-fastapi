@@ -123,6 +123,7 @@ resource "opentelekomcloud_apigw_gateway_v2" "gateway" {
   loadbalancer_provider           = "elb"
   maintain_begin                  = "22:00:00"
   name                            = format("%s_%s", var.prefix, "apig-1")
+  enterprise_project_id           = "0"
 
   security_group_id = opentelekomcloud_networking_secgroup_v2.secgroup_1.id
   spec_id           = "BASIC"

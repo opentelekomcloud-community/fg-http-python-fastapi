@@ -1,13 +1,6 @@
 # FunctionGraph example "fg-http-python-fastapi"
 
-Sample on how to create FunctionGraph HTTP function using python and [FastAPI framework](https://fastapi.tiangolo.com)
-
-> [!Note] 
-> <pre>
-> ###############################################  
->         Work in progress....
-> ###############################################  
-> </pre>  
+Sample on how to create FunctionGraph HTTP function using python and [FastAPI framework](https://fastapi.tiangolo.com) 
 
 ## Architecture overview
 
