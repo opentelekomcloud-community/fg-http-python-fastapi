@@ -56,7 +56,7 @@ terraform {
 
     opentelekomcloud = {
       source  = "opentelekomcloud/opentelekomcloud"
-      version = ">= 1.36.47"
+      version = ">= 1.36.70"
     }
 
     local = {
@@ -135,5 +135,4 @@ provider "opentelekomcloud" {
 
   domain_name = var.OTC_SDK_DOMAIN_NAME
   tenant_name = var.OTC_SDK_PROJECTNAME
-
 }
